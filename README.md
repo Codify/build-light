@@ -1,34 +1,34 @@
 # build-light
 
-build-light displays the status of a Visual Studio Online build and drives awareness across the team in a simple way.
+![Image of build-light](http://www.codify.com/wp-content/uploads/2015/08/lights.jpg)
 
-A Universal App that can run on Windows 10 and Windows 10 IoT Core, and __with a little effort__ can be hooked up to an LED light strip making the ultimate [headless] build-light
+build-light displays the status of a Visual Studio Online build and drives awareness across the team in a simple way. 
 
-[Read More](http://www.codify.com/visual-studio-build-monitor-first-play-windows-iot/)
+A Universal App that can run on Windows 10 and Windows 10 IoT Core, and __with a little effort__ can be hooked up to an LED light strip making the ultimate [headless] build-light. We have tested the app running on a Raspberry Pi 2 with Windows 10 IoT Core RTM.
 
-We have tested the app running on a Raspberry Pi 2 with Windows 10 IoT Core RTM
+Read more on our [blog](http://www.codify.com/visual-studio-build-monitor-first-play-windows-iot/)
 
 ## So many colours
 **_Red_**
-Uh-oh build is broken
+     - Uh-oh build is broken
 
 **_Green_**
-Build is good
+   - Build is good
 
 **_Blue_**
-Build is in progress
+    - Build is in progress
 
 **_Purple_**
-Build is unknown. Often seen when a build is queued but yet to be allocated to a build agent
+  - Build is unknown. Often seen when a build is queued but yet to be allocated to a build agent
 
 **_Yellow_**
-Build kinda worked [partially succeeded]
+  - Build kinda worked [partially succeeded]
 
 **_White_**
-Polling
+   - Polling
 
 **_Off_**
-Check the power? Maybe raise an issue.
+     - Check the power? Maybe raise an issue.
 
 ## Installation
 
@@ -41,11 +41,12 @@ Not finished yet, get your [RPi2 running Windows 10 IoT](https://ms-iot.github.i
 ### Build and Deploy
 
 Before you start, your RPi2 must be:
-* On
-* Has an IP address
+* On and at the Windows 10 IoT launcher
+* Have an IP address
 * Visible in WindowsIoTCoreWatcher
- 
- 
+
+With this in place you are now ready to deploy build-light.
+
 1. Load the Codify.VisualStudioOnline.BuildLight.sln into Visual Studio 2015
 2. Change the build type to **Release** and platform to **ARM**
 3. Set the target to **Remote Machine** and specify the **IP address** of your RPi2
@@ -55,7 +56,3 @@ Before you start, your RPi2 must be:
 The app will send telemetry (device and status) and exceptions are sent to our own Azure Application Insights. This helps us help you :)
 
 Opt-out by removing the code before you deploy.
-
-## Feedback
-Always welcome please raise any issues
-
