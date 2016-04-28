@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace Codify.VisualStudioOnline.BuildLight
 {
@@ -16,66 +14,61 @@ namespace Codify.VisualStudioOnline.BuildLight
         private const string _BuildUrlFormat = "https://{0}.visualstudio.com/DefaultCollection/{1}/_apis/build/builds?definitions={2}&$top=1&api-version=2.0";
         private const string _DefinitionUrlFormat = "https://{0}.visualstudio.com/DefaultCollection/{1}/_apis/build/definitions?api-version=2.0";
 
-        // Get the alternate credentials that you'll use to access the Visual Studio Online account.
-        private string _AltUsername;
-        private string _AltPassword;
-
         private Settings _Settings;
 
         private BuildDefinition _BuildDefinition;
 
-        internal delegate void StatusChangedHandler(Status status);
+        internal delegate void StatusChangedHandler(Status status, Guid? correlationId = null);
         internal event StatusChangedHandler StatusChanged;
 
-        internal delegate void RetrievingStatusHandler();
+        internal delegate void RetrievingStatusHandler(Guid? correlationId = null);
         internal event RetrievingStatusHandler RetrievingStatusStart;
         internal event RetrievingStatusHandler RetrievingStatusEnd;
 
         internal delegate void StoppedHandler();
         internal event StoppedHandler Stopped;
 
-        internal delegate void LogHandler(string message);
+        internal delegate void LogHandler(string message, Guid? correlationId = null);
         internal event LogHandler Log;
 
         CancellationToken _Token;
 
-        internal void Start(
-            string altUsername,
-            string altPassword,
-            Settings settings,
-            CancellationToken token
-            )
+        public AuthenticationHeaderValue AuthenticationHeader
         {
-            _AltUsername = altUsername;
-            _AltPassword = altPassword;
+            get { return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", _Settings.Username, _Settings.Password)))); }
+        }
+
+        internal void Start(Settings settings, CancellationToken token)
+        {
             _Settings = settings;
             _Token = token;
 
             Task.Run(async () => await StartInternalAsync(), _Token);
-
         }
 
         internal async Task StartInternalAsync()
         {
             try
             {
-                await StoreSettings();
-
                 _BuildDefinition = await GetBuildDefinitionDetails();
 
                 if (_BuildDefinition == null)
                 {
-                    StatusChanged(Status.RetrievalError);
+                    StatusChanged?.Invoke(Status.RetrievalError);
                     Log("Could not retrieve build definition details");
                     return;
                 }
 
+                Status? lastStatus = null;
+
                 while (!_Token.IsCancellationRequested)
                 {
+                    Guid? correlationId = Guid.NewGuid();
+
                     try
                     {
-                        RetrievingStatusStart();
-                        await GetVsoStatus();
+                        RetrievingStatusStart?.Invoke(correlationId);
+                        lastStatus = await GetVsoStatus(correlationId, lastStatus);
                     }
                     catch (Exception ex)
                     {
@@ -83,14 +76,14 @@ namespace Codify.VisualStudioOnline.BuildLight
                     }
                     finally
                     {
-                        RetrievingStatusEnd();
+                        RetrievingStatusEnd?.Invoke(correlationId);
                         await Task.Delay(60000, _Token);
                     }
                 }
             }
             finally
             {
-                Stopped();
+                Stopped?.Invoke();
             }
 
         }
@@ -125,15 +118,10 @@ namespace Codify.VisualStudioOnline.BuildLight
 
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Accept.Add(
-                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Set alternate credentials
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(
-                        System.Text.ASCIIEncoding.ASCII.GetBytes(
-                            string.Format("{0}:{1}", _AltUsername, _AltPassword))));
-
+                client.DefaultRequestHeaders.Authorization = AuthenticationHeader;
 
                 //Get me the last build
                 responseBody = await GetAsync(client, url);
@@ -150,14 +138,12 @@ namespace Codify.VisualStudioOnline.BuildLight
                 {
                     return null;
                 }
-
             }
-
-
         }
 
-        private async Task GetVsoStatus()
+        private async Task<Status> GetVsoStatus(Guid? correlationId, Status? lastStatus)
         {
+            var newStatus = Status.Unknown;
 
             var responseBody = string.Empty;
 
@@ -167,22 +153,17 @@ namespace Codify.VisualStudioOnline.BuildLight
 
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Accept.Add(
-                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Set alternate credentials
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(
-                        System.Text.ASCIIEncoding.ASCII.GetBytes(
-                            string.Format("{0}:{1}", _AltUsername, _AltPassword))));
-
+                client.DefaultRequestHeaders.Authorization = AuthenticationHeader;
 
                 //Get me the last build
                 responseBody = await GetAsync(client, url);
 
+                var statusMessage = string.Empty;
                 if (!string.IsNullOrWhiteSpace(responseBody))
                 {
-
                     BuildList builds = Util.GetObjectFromJson<BuildList>(responseBody);
 
                     build = builds.Builds.FirstOrDefault();
@@ -196,86 +177,65 @@ namespace Codify.VisualStudioOnline.BuildLight
                                 switch (build.ResultStatus)
                                 {
                                     case BuildResultStatus.Succeeded:
-
-                                        StatusChanged(Status.Succeeded);
+                                        newStatus = Status.Succeeded;
                                         break;
 
                                     case BuildResultStatus.Failed:
-                                        StatusChanged(Status.Failed);
+                                        newStatus = Status.Failed;
                                         break;
 
                                     case BuildResultStatus.PartiallySucceeded:
-                                        StatusChanged(Status.PartiallySucceeded);
+                                        newStatus = Status.PartiallySucceeded;
                                         break;
 
-
                                     case BuildResultStatus.Canceled:
-                                        StatusChanged(Status.Cancelled);
+                                        newStatus = Status.Cancelled;
                                         break;
 
                                     default:
-
-                                        StatusChanged(Status.Unknown);
-                                        Log("setting status to 'default' because status is " + build.ResultStatus);
+                                        newStatus = Status.Unknown;
+                                        statusMessage = "setting status to 'default' because status is " + build.ResultStatus;
                                         break;
                                 }
 
                                 break;
 
                             case BuildProgressStatus.InProgress:
-                                StatusChanged(Status.InProgress);
+                                newStatus = Status.InProgress;
                                 break;
 
                             default:
-                                StatusChanged(Status.Unknown);
+                                newStatus = Status.Unknown;
                                 break;
                         }
-
-
-
                     }
                     else
                     {
-                        StatusChanged(Status.Unknown);
-                        Log("could not load build");
+                        StatusChanged?.Invoke(Status.Unknown, correlationId);
+                        statusMessage = "Could not load build";
                     }
                 }
                 else
                 {
-                    StatusChanged(Status.Unknown);
-                    Log("could not load build");
+                    StatusChanged?.Invoke(Status.Unknown, correlationId);
+                    statusMessage = "Could not load build";
                 }
 
+                if (lastStatus.HasValue && (lastStatus.Value == newStatus))
+                {
+                    Log(string.IsNullOrWhiteSpace(statusMessage) ? "Build status is unchanged." : statusMessage, correlationId);
+                }
+                else
+                {
+                    StatusChanged?.Invoke(newStatus, correlationId);
+                    if (!string.IsNullOrWhiteSpace(statusMessage))
+                    {
+                        Log(statusMessage, correlationId);
+                    }
+                }
             }
 
-
+            return newStatus;
         }
-
-        private async Task StoreSettings()
-        {
-            try
-            {
-                //store username and password securely
-                var vault = new Windows.Security.Credentials.PasswordVault();
-                vault.Add(new Windows.Security.Credentials.PasswordCredential(
-                    "BuildLight", _AltUsername, _AltPassword)
-                );
-
-
-                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile file = await localFolder.CreateFileAsync(_SettingsFilename, CreationCollisionOption.ReplaceExisting);
-
-                string contents = Util.GetJsonFromObject(_Settings);
-                await FileIO.WriteTextAsync(file, contents);
-            }
-            catch (Exception ex)
-            {
-                Log(ex.Message);
-                throw;
-            }
-
-        }
-
-
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Codify.VisualStudioOnline.BuildLight
 {
-    internal enum Status
+    public enum Status
     {
         Unknown,
         InProgress,

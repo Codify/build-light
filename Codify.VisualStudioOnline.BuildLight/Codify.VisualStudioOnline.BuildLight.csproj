@@ -104,6 +104,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BuildMonitor.cs" />
+    <Compile Include="Extensions\SettingsExtensions.cs" />
+    <Compile Include="LogMessage.cs" />
+    <Compile Include="MainPageViewModel.cs" />
+    <Compile Include="UI\Behaviours\PasswordBehaviour.cs" />
+    <Compile Include="UI\Converters\BooleanToInvertedBooleanConverter.cs" />
+    <Compile Include="UI\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="LEDLightListener.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -113,6 +119,11 @@
     <Compile Include="Status.cs" />
     <Compile Include="Telemetry.cs" />
     <Compile Include="TfsTypes.cs" />
+    <Compile Include="UI\Converters\BuildStatusToBrushConverter.cs" />
+    <Compile Include="UI\Converters\InvertedBooleanToVisibilityConverter.cs" />
+    <Compile Include="UI\Converters\MessageStatusToBrushConverter.cs" />
+    <Compile Include="UI\DelegateCommand.cs" />
+    <Compile Include="UI\NotifyPropertyChanged.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>

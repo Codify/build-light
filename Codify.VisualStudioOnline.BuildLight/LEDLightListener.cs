@@ -27,7 +27,7 @@ namespace Codify.VisualStudioOnline.BuildLight
             InitGPIO();
         }
 
-        private void Monitor_StatusChanged(Status status)
+        private void Monitor_StatusChanged(Status status, Guid? correlationId)
         {
 
             switch (status)
@@ -84,13 +84,13 @@ namespace Codify.VisualStudioOnline.BuildLight
         }
 
 
-        private void Monitor_RetrievingStatusStart()
+        private void Monitor_RetrievingStatusStart(Guid? correlationId)
         {
             red.Write(GpioPinValue.High);
             green.Write(GpioPinValue.High);
             blue.Write(GpioPinValue.High);
-
         }
+
         private void InitGPIO()
         {
             red = GpioController.GetDefault().OpenPin(_Settings.RedPin);
