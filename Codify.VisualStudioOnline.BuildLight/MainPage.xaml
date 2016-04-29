@@ -120,13 +120,22 @@
                         <TextBlock Text="Pins" Grid.Row="5" />
 
                         <TextBlock Text="Red" Grid.Row="5" HorizontalAlignment="Right"/>
-                        <TextBox Text="{Binding Path=RedPin, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" Width="60" HorizontalAlignment="Left" />
-
+                        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" >
+                            <TextBox Text="{Binding Path=RedPinValue, Mode=TwoWay}" Width="60" HorizontalAlignment="Left" />
+                            <TextBlock Text="{Binding Path=RedPinError}" Margin="2 0 0 0" Foreground="DarkRed" />
+                        </StackPanel>
+                        
                         <TextBlock Text="Green" Grid.Row="6" HorizontalAlignment="Right" />
-                        <TextBox Text="{Binding Path=GreenPin, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" Width="60" HorizontalAlignment="Left" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" >
+                            <TextBox Text="{Binding Path=GreenPinValue, Mode=TwoWay}" Width="60" HorizontalAlignment="Left" />
+                            <TextBlock Text="{Binding Path=GreenPinError}" Margin="2 0 0 0" Foreground="DarkRed" />
+                        </StackPanel>
 
                         <TextBlock Text="Blue" Grid.Row="7" HorizontalAlignment="Right" />
-                        <TextBox Text="{Binding Path=BluePin, Mode=TwoWay}" Grid.Row="7" Grid.Column="1" Width="60" HorizontalAlignment="Left" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" >
+                            <TextBox Text="{Binding Path=BluePinValue, Mode=TwoWay}" Width="60" HorizontalAlignment="Left" />
+                            <TextBlock Text="{Binding Path=BluePinError}" Margin="2 0 0 0" Foreground="DarkRed" />
+                        </StackPanel>
 
                         <TextBlock Text="Show Logs" Grid.Row="8" />
                         <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1">
@@ -140,6 +149,7 @@
                         </StackPanel>
                     </Grid>
 
+                    <Button Content="Save" Command="{Binding Path=SaveSettingsCommand}" CommandParameter="True" Width="80" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" />
                     <ToggleButton Content="{Binding Path=RunButtonText, Mode=TwoWay}" IsChecked="{Binding Path=IsBusy, Mode=TwoWay}" Command="{Binding Path=ToggleRunningCommand}" Width="80" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" />
 
                 </Grid>

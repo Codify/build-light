@@ -132,15 +132,37 @@ namespace Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLi
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[3];
-            _typeNameTable[0] = "Codify.VisualStudioOnline.BuildLight.MainPage";
-            _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
-            _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
+            _typeNameTable = new string[14];
+            _typeNameTable[0] = "Codify.VisualStudioOnline.BuildLight.UI.Converters.BooleanToVisibilityConverter";
+            _typeNameTable[1] = "Object";
+            _typeNameTable[2] = "Codify.VisualStudioOnline.BuildLight.UI.Converters.InvertedBooleanToVisibilityConverter";
+            _typeNameTable[3] = "Codify.VisualStudioOnline.BuildLight.UI.Converters.BuildStatusToBrushConverter";
+            _typeNameTable[4] = "Codify.VisualStudioOnline.BuildLight.UI.Converters.MessageStatusToBrushConverter";
+            _typeNameTable[5] = "Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour";
+            _typeNameTable[6] = "Boolean";
+            _typeNameTable[7] = "Windows.UI.Xaml.DependencyObject";
+            _typeNameTable[8] = "String";
+            _typeNameTable[9] = "Codify.VisualStudioOnline.BuildLight.MainPage";
+            _typeNameTable[10] = "Windows.UI.Xaml.Controls.Page";
+            _typeNameTable[11] = "Windows.UI.Xaml.Controls.UserControl";
+            _typeNameTable[12] = "Codify.VisualStudioOnline.BuildLight.MainPageViewModel";
+            _typeNameTable[13] = "Codify.VisualStudioOnline.BuildLight.UI.NotifyPropertyChanged";
 
-            _typeTable = new global::System.Type[3];
-            _typeTable[0] = typeof(global::Codify.VisualStudioOnline.BuildLight.MainPage);
-            _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
-            _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
+            _typeTable = new global::System.Type[14];
+            _typeTable[0] = typeof(global::Codify.VisualStudioOnline.BuildLight.UI.Converters.BooleanToVisibilityConverter);
+            _typeTable[1] = typeof(global::System.Object);
+            _typeTable[2] = typeof(global::Codify.VisualStudioOnline.BuildLight.UI.Converters.InvertedBooleanToVisibilityConverter);
+            _typeTable[3] = typeof(global::Codify.VisualStudioOnline.BuildLight.UI.Converters.BuildStatusToBrushConverter);
+            _typeTable[4] = typeof(global::Codify.VisualStudioOnline.BuildLight.UI.Converters.MessageStatusToBrushConverter);
+            _typeTable[5] = typeof(global::Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour);
+            _typeTable[6] = typeof(global::System.Boolean);
+            _typeTable[7] = typeof(global::Windows.UI.Xaml.DependencyObject);
+            _typeTable[8] = typeof(global::System.String);
+            _typeTable[9] = typeof(global::Codify.VisualStudioOnline.BuildLight.MainPage);
+            _typeTable[10] = typeof(global::Windows.UI.Xaml.Controls.Page);
+            _typeTable[11] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
+            _typeTable[12] = typeof(global::Codify.VisualStudioOnline.BuildLight.MainPageViewModel);
+            _typeTable[13] = typeof(global::Codify.VisualStudioOnline.BuildLight.UI.NotifyPropertyChanged);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -175,7 +197,13 @@ namespace Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLi
             return -1;
         }
 
-        private object Activate_0_MainPage() { return new global::Codify.VisualStudioOnline.BuildLight.MainPage(); }
+        private object Activate_0_BooleanToVisibilityConverter() { return new global::Codify.VisualStudioOnline.BuildLight.UI.Converters.BooleanToVisibilityConverter(); }
+        private object Activate_2_InvertedBooleanToVisibilityConverter() { return new global::Codify.VisualStudioOnline.BuildLight.UI.Converters.InvertedBooleanToVisibilityConverter(); }
+        private object Activate_3_BuildStatusToBrushConverter() { return new global::Codify.VisualStudioOnline.BuildLight.UI.Converters.BuildStatusToBrushConverter(); }
+        private object Activate_4_MessageStatusToBrushConverter() { return new global::Codify.VisualStudioOnline.BuildLight.UI.Converters.MessageStatusToBrushConverter(); }
+        private object Activate_9_MainPage() { return new global::Codify.VisualStudioOnline.BuildLight.MainPage(); }
+        private object Activate_12_MainPageViewModel() { return new global::Codify.VisualStudioOnline.BuildLight.MainPageViewModel(); }
+        private object Activate_13_NotifyPropertyChanged() { return new global::Codify.VisualStudioOnline.BuildLight.UI.NotifyPropertyChanged(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -187,30 +215,149 @@ namespace Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLi
             switch (typeIndex)
             {
 
-            case 0:   //  Codify.VisualStudioOnline.BuildLight.MainPage
-                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_0_MainPage;
+            case 0:   //  Codify.VisualStudioOnline.BuildLight.UI.Converters.BooleanToVisibilityConverter
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_0_BooleanToVisibilityConverter;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 1:   //  Windows.UI.Xaml.Controls.Page
+            case 1:   //  Object
                 xamlType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 2:   //  Windows.UI.Xaml.Controls.UserControl
+            case 2:   //  Codify.VisualStudioOnline.BuildLight.UI.Converters.InvertedBooleanToVisibilityConverter
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_2_InvertedBooleanToVisibilityConverter;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 3:   //  Codify.VisualStudioOnline.BuildLight.UI.Converters.BuildStatusToBrushConverter
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_3_BuildStatusToBrushConverter;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 4:   //  Codify.VisualStudioOnline.BuildLight.UI.Converters.MessageStatusToBrushConverter
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_4_MessageStatusToBrushConverter;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 5:   //  Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.AddMemberName("IsPasswordControl");
+                userType.AddMemberName("Password");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 6:   //  Boolean
                 xamlType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 7:   //  Windows.UI.Xaml.DependencyObject
+                xamlType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 8:   //  String
+                xamlType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 9:   //  Codify.VisualStudioOnline.BuildLight.MainPage
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_9_MainPage;
+                userType.AddMemberName("ViewModel");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 10:   //  Windows.UI.Xaml.Controls.Page
+                xamlType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 11:   //  Windows.UI.Xaml.Controls.UserControl
+                xamlType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 12:   //  Codify.VisualStudioOnline.BuildLight.MainPageViewModel
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Codify.VisualStudioOnline.BuildLight.UI.NotifyPropertyChanged"));
+                userType.SetIsReturnTypeStub();
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 13:   //  Codify.VisualStudioOnline.BuildLight.UI.NotifyPropertyChanged
+                userType = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType.Activator = Activate_13_NotifyPropertyChanged;
+                userType.SetIsLocalType();
+                xamlType = userType;
                 break;
             }
             return xamlType;
         }
 
 
+        private object get_0_PasswordBehaviour_IsPasswordControl(object instance)
+        {
+            return global::Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour.GetIsPasswordControl((global::Windows.UI.Xaml.DependencyObject)instance);
+        }
+        private void set_0_PasswordBehaviour_IsPasswordControl(object instance, object Value)
+        {
+            global::Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour.SetIsPasswordControl((global::Windows.UI.Xaml.DependencyObject)instance, (global::System.Boolean)Value);
+        }
+        private object get_1_PasswordBehaviour_Password(object instance)
+        {
+            return global::Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour.GetPassword((global::Windows.UI.Xaml.DependencyObject)instance);
+        }
+        private void set_1_PasswordBehaviour_Password(object instance, object Value)
+        {
+            global::Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour.SetPassword((global::Windows.UI.Xaml.DependencyObject)instance, (global::System.String)Value);
+        }
+        private object get_2_MainPage_ViewModel(object instance)
+        {
+            var that = (global::Codify.VisualStudioOnline.BuildLight.MainPage)instance;
+            return that.ViewModel;
+        }
+        private void set_2_MainPage_ViewModel(object instance, object Value)
+        {
+            var that = (global::Codify.VisualStudioOnline.BuildLight.MainPage)instance;
+            that.ViewModel = (global::Codify.VisualStudioOnline.BuildLight.MainPageViewModel)Value;
+        }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
             global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlMember xamlMember = null;
-            // No Local Properties
+            global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType userType;
+
+            switch (longMemberName)
+            {
+            case "Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour.IsPasswordControl":
+                userType = (global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour");
+                xamlMember = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlMember(this, "IsPasswordControl", "Boolean");
+                xamlMember.SetTargetTypeName("Windows.UI.Xaml.DependencyObject");
+                xamlMember.SetIsAttachable();
+                xamlMember.Getter = get_0_PasswordBehaviour_IsPasswordControl;
+                xamlMember.Setter = set_0_PasswordBehaviour_IsPasswordControl;
+                break;
+            case "Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour.Password":
+                userType = (global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Codify.VisualStudioOnline.BuildLight.UI.Behaviours.PasswordBehaviour");
+                xamlMember = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlMember(this, "Password", "String");
+                xamlMember.SetTargetTypeName("Windows.UI.Xaml.DependencyObject");
+                xamlMember.SetIsAttachable();
+                xamlMember.Getter = get_1_PasswordBehaviour_Password;
+                xamlMember.Setter = set_1_PasswordBehaviour_Password;
+                break;
+            case "Codify.VisualStudioOnline.BuildLight.MainPage.ViewModel":
+                userType = (global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Codify.VisualStudioOnline.BuildLight.MainPage");
+                xamlMember = new global::Codify.VisualStudioOnline.BuildLight.Codify_VisualStudioOnline_BuildLight_XamlTypeInfo.XamlMember(this, "ViewModel", "Codify.VisualStudioOnline.BuildLight.MainPageViewModel");
+                xamlMember.Getter = get_2_MainPage_ViewModel;
+                xamlMember.Setter = set_2_MainPage_ViewModel;
+                break;
+            }
             return xamlMember;
         }
     }

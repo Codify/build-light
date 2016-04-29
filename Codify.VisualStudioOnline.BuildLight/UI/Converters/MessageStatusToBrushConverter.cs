@@ -19,29 +19,21 @@ namespace Codify.VisualStudioOnline.BuildLight.UI.Converters
 
             switch (status)
             {
-                case MessageStatus.Cancelled:
-                    colour = Windows.UI.Colors.Cyan;
-                    break;
                 case MessageStatus.Failed:
-                    colour = Windows.UI.Colors.Red;
+                case MessageStatus.Error:
+                    colour = Colors.DarkRed;
                     break;
                 case MessageStatus.InProgress:
-                     colour = Windows.UI.Colors.Blue;
-                    break;
                 case MessageStatus.PartiallySucceeded:
-                    colour = Windows.UI.Colors.Yellow;
-                    break;
                 case MessageStatus.RetrievalError:
-                    colour = Windows.UI.Colors.Purple;
-                    break;
                 case MessageStatus.Succeeded:
-                    colour = Windows.UI.Colors.Green;
+                    colour = Colors.Silver;
                     break;
                 case MessageStatus.Warning:
-                case MessageStatus.Error:
+                    colour = Colors.Orange;
                     break;
                 default:
-                    colour = Windows.UI.Colors.Silver;
+                    colour = Colors.Gray;
                     break;
             }
 

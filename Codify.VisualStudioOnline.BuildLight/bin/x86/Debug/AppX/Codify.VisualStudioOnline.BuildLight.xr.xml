@@ -15,9 +15,12 @@
     <RootPropertyPathName Name="Settings" />
     <RootPropertyPathName Name="LogVerbosity" />
     <RootPropertyPathName Name="ShowLogs" />
-    <RootPropertyPathName Name="BluePin" />
-    <RootPropertyPathName Name="GreenPin" />
-    <RootPropertyPathName Name="RedPin" />
+    <RootPropertyPathName Name="BluePinError" />
+    <RootPropertyPathName Name="BluePinValue" />
+    <RootPropertyPathName Name="GreenPinError" />
+    <RootPropertyPathName Name="GreenPinValue" />
+    <RootPropertyPathName Name="RedPinError" />
+    <RootPropertyPathName Name="RedPinValue" />
     <RootPropertyPathName Name="BuildName" />
     <RootPropertyPathName Name="Project" />
     <RootPropertyPathName Name="Password" />
@@ -36,9 +39,9 @@
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
       <RootProperty Name="Text" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Margin" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="FontSize" />
-      <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.FrameworkElement">
       <RootProperty Name="VerticalAlignment" />
@@ -137,6 +140,14 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
       <RootProperty Name="Height" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Content" />
+      <RootProperty Name="Command" />
+      <RootProperty Name="CommandParameter" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
       <RootProperty Name="Width" />

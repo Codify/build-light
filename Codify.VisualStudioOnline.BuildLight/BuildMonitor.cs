@@ -28,7 +28,7 @@ namespace Codify.VisualStudioOnline.BuildLight
         internal delegate void StoppedHandler();
         internal event StoppedHandler Stopped;
 
-        internal delegate void LogHandler(string message, Guid? correlationId = null);
+        internal delegate void LogHandler(string message, Status status = Status.Unknown, Guid? correlationId = null);
         internal event LogHandler Log;
 
         CancellationToken _Token;
@@ -55,7 +55,7 @@ namespace Codify.VisualStudioOnline.BuildLight
                 if (_BuildDefinition == null)
                 {
                     StatusChanged?.Invoke(Status.RetrievalError);
-                    Log("Could not retrieve build definition details");
+                    Log("Could not retrieve build definition details", Status.RetrievalError);
                     return;
                 }
 
@@ -223,14 +223,15 @@ namespace Codify.VisualStudioOnline.BuildLight
 
                 if (lastStatus.HasValue && (lastStatus.Value == newStatus))
                 {
-                    Log(string.IsNullOrWhiteSpace(statusMessage) ? "Build status is unchanged." : statusMessage, correlationId);
+                    StatusChanged?.Invoke(newStatus, correlationId);
+                    // Log(string.IsNullOrWhiteSpace(statusMessage) ? "Build status is unchanged." : statusMessage, correlationId);
                 }
                 else
                 {
                     StatusChanged?.Invoke(newStatus, correlationId);
                     if (!string.IsNullOrWhiteSpace(statusMessage))
                     {
-                        Log(statusMessage, correlationId);
+                        Log(statusMessage, newStatus, correlationId);
                     }
                 }
             }

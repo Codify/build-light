@@ -77,10 +77,14 @@ namespace Codify.VisualStudioOnline.BuildLight
                         if (gpio != null)
                         {
                             Telemetry.TrackEvent("LED.Found");
-                            await Log("Initialising LED listener...", null);
+                            await Log("Initialising LED listener...");
                             LedListener = new LEDLightListener();
                             LedListener.Subscribe(BuildMonitor, Settings);
                             LedListener.Start();
+                        }
+                        else
+                        {
+                            // We are running on a machine that does not support the ledlistener, so flag it as successfully started
                         }
                     }
                     catch (Exception ex)
@@ -90,6 +94,7 @@ namespace Codify.VisualStudioOnline.BuildLight
                     }
                 }
 
+                await Log("Starting build monitor...");
                 BuildMonitor.Start(Settings, CancellationToken.Token);
             }
             else
@@ -97,14 +102,19 @@ namespace Codify.VisualStudioOnline.BuildLight
                 RunButtonText = "Start";
 
                 Telemetry.TrackEvent("App.StopClick");
-
+                if (LedListener != null)
+                {
+                    LedListener.Dispose();
+                    LedListener.Unsubscribe(BuildMonitor);
+                    LedListener = null;
+                }
                 CancellationToken.Cancel();
             }
         }
 
         private async void ExecuteSaveSettings(object argument)
         {
-            if (!ShowSettings)
+            if ((!ShowSettings) || (argument != null))
             {
                 await SaveSettingsAsync();
             }
@@ -147,9 +157,9 @@ namespace Codify.VisualStudioOnline.BuildLight
             BuildMonitor.Log += BuildMonitor_Log;
         }
 
-        private async void BuildMonitor_Log(string text, Guid? correlationId)
+        private async void BuildMonitor_Log(string text, Status status, Guid? correlationId)
         {
-            await Log(text, correlationId);
+            await Log(text, status, correlationId);
         }
 
         private async void BuildMonitor_Stopped()
@@ -164,14 +174,15 @@ namespace Codify.VisualStudioOnline.BuildLight
 
         private async void BuildMonitor_RetrievingStatusStart(Guid? correlationId)
         {
-            await Log("Retrieving Build status ...", correlationId);
+            await Log("Retrieving Build status ...", Status.Unknown, correlationId);
+            BuildStatus = Status.Unknown;
         }
 
         private async void BuildMonitor_StatusChanged(Status status, Guid? correlationId)
         {
             Telemetry.TrackEvent("Build." + status.ToString());
             await Log("Build " + status.ToString(), status, correlationId);
-            BuildStatus = status;
+            BuildStatus = status == Status.Unknown ? Status.RetrievalError : status;
         }
 
 
@@ -342,18 +353,18 @@ namespace Codify.VisualStudioOnline.BuildLight
 
             await Log(text, messageStatus, correlationId);
         }
-   
+
         private async Task Log(string text, Guid? correlationId = null)
         {
-            await Log(message => message.Text = text, () => new LogMessage(text), text, correlationId);
+            await Log(message => message.Text = text, () => new LogMessage(text), text, MessageStatus.Information, correlationId);
         }
 
         private async Task Log(string text, MessageStatus status, Guid? correlationId = null)
         {
-            await Log(message => { message.Text = text; message.Status = status; }, () => new LogMessage(text, status), text, correlationId);
+            await Log(message => { message.Text = text; message.Status = status; }, () => new LogMessage(text, status), text, status, correlationId);
         }
 
-        private async Task Log(Action<LogMessage> updateMessage, Func<LogMessage> createMessage, string text, Guid? correlationId)
+        private async Task Log(Action<LogMessage> updateMessage, Func<LogMessage> createMessage, string text, MessageStatus status, Guid? correlationId)
         {
             try
             {
@@ -369,7 +380,14 @@ namespace Codify.VisualStudioOnline.BuildLight
             {
                 await PerformUICode(() =>
                 {
-                    updateMessage.Invoke(message);
+                    if (status == message.Status)
+                    {
+                        LogEntries.Remove(message);
+                    }
+                    else
+                    {
+                        updateMessage.Invoke(message);
+                    }
                 });
             }
             else
