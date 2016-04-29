@@ -120,9 +120,6 @@
   <data name="XmlFoundEndOfFile" xml:space="preserve">
     <value>end of file</value>
   </data>
-  <data name="InterfaceTypeCannotBeCreated" xml:space="preserve">
-    <value>Interface type '{0}' cannot be created. Consider replacing with a non-interface serializable type.</value>
-  </data>
   <data name="JsonServerTypeSpecifiedForInvalidDataType" xml:space="preserve">
     <value>Attempted to write an attribute with local name '{0}' after writing the attribute '{1}'='{2}'. An attribute with local name '{0}' may be written only after writing the attribute '{1}'='{3}'.</value>
   </data>
@@ -183,6 +180,9 @@
   <data name="CollectionTypeHasMultipleDefinitionsOfInterface" xml:space="preserve">
     <value>{0} has multiple definitions of interface '{1}'.</value>
   </data>
+  <data name="XmlAsyncIsRunningException" xml:space="preserve">
+    <value>An asynchronous operation is already in progress.</value>
+  </data>
   <data name="InvalidEnumValueOnRead" xml:space="preserve">
     <value>Invalid enum value '{0}' cannot be deserialized into type '{1}'. Ensure that the necessary enum values are present and are marked with EnumMemberAttribute attribute if the type has DataContractAttribute attribute.</value>
   </data>
@@ -242,6 +242,9 @@
   </data>
   <data name="JsonXmlProcessingInstructionNotSupported" xml:space="preserve">
     <value>Processing instructions (other than the XML declaration) are not supported.</value>
+  </data>
+  <data name="FactoryObjectContainsSelfReference" xml:space="preserve">
+    <value>Object graph of type '{0}' with Id '{2}' contains a reference to itself. The object has been replaced with a new object of type '{1}' either because it implements IObjectReference or because it is surrogated. The serializer does not support fixing up the nested reference to the new object and cannot deserialize this object. Consider changing the object to remove the nested self-reference.</value>
   </data>
   <data name="XmlInvalidSurrogate" xml:space="preserve">
     <value>Surrogate char '0x{0}' not valid. Surrogate chars range from 0x10000 to 0x10FFFF.</value>
@@ -386,6 +389,9 @@
   </data>
   <data name="JsonWriteArrayNotSupported" xml:space="preserve">
     <value>To write JSON arrays, use XML writer methods to write the attribute type='array' followed by methods like WriteStartElement (with the local name 'item'), WriteAttributeString, and WriteEndElement to write the JSON array items.</value>
+  </data>
+  <data name="UnknownXmlType" xml:space="preserve">
+    <value>Type '{0}' is not a valid XML type.</value>
   </data>
   <data name="XmlInvalidDeclaration" xml:space="preserve">
     <value>XML declaration can only be written at the beginning of the document.</value>
@@ -603,6 +609,9 @@
   <data name="XmlInvalidConversionWithoutValue" xml:space="preserve">
     <value>The value cannot be parsed as the type '{0}'.</value>
   </data>
+  <data name="XmlMaxDepthExceeded" xml:space="preserve">
+    <value>The maximum read depth ({0}) has been exceeded because XML data being read has more levels of nesting than is allowed by the quota. This quota may be increased by changing the MaxDepth property on the XmlDictionaryReaderQuotas object used when creating the XML reader.</value>
+  </data>
   <data name="DeserializedObjectWithIdNotFound" xml:space="preserve">
     <value>Deserialized object with reference id '{0}' not found in stream.</value>
   </data>
@@ -617,6 +626,9 @@
   </data>
   <data name="ResolveTypeReturnedNull" xml:space="preserve">
     <value>An object of type '{0}' which derives from DataContractResolver returned a null typeName or typeNamespace but not both from its TryResolveType method when attempting to resolve the name for an object of type '{1}'. Change the TryResolveType implementation to return non-null values, or to return null values for both typeName and typeNamespace in order to serialize as the declared type.</value>
+  </data>
+  <data name="SurrogatesWithGetOnlyCollectionsNotSupportedSerDeser" xml:space="preserve">
+    <value>Using surrogates with get-only collection properties is not supported.  Consider removing the surrogate associated with '{0}'.</value>
   </data>
   <data name="InvalidMember" xml:space="preserve">
     <value>Member '{0}.{1}' cannot be serialized since it is neither a field nor a property, and therefore cannot be marked with the DataMemberAttribute attribute. Remove the DataMemberAttribute attribute from the '{1}' member.</value>
@@ -909,6 +921,9 @@
   <data name="ObjectDeserializer_InvalidArrayExtraComma" xml:space="preserve">
     <value>JSON array ended with a trailing comma.</value>
   </data>
+  <data name="RecursiveCollectionType" xml:space="preserve">
+    <value>Type '{0}' is a recursive collection data contract which is not supported. Consider modifying the definition of collection '{0}' to remove references to itself.</value>
+  </data>
   <data name="JsonMustUseWriteStringForWritingAttributeValues" xml:space="preserve">
     <value>To write attribute values with this XmlDictionaryWriter implementation, you must write either string or char[] values.</value>
   </data>
@@ -956,9 +971,6 @@
   </data>
   <data name="PartialTrustNonAttributedSerializableTypeNoPublicConstructor" xml:space="preserve">
     <value>The type '{0}' cannot be deserialized because it does not have a public parameterless constructor. Alternatively, you can make it internal, and use the InternalsVisibleToAttribute attribute on your assembly in order to enable serialization of internal members - see documentation for more details. Be aware that doing so has certain security implications.</value>
-  </data>
-  <data name="KnownTypeConfigClosedGenericDeclared" xml:space="preserve">
-    <value>Declared type '{0}' in config cannot be a closed or partial generic type.</value>
   </data>
   <data name="JsonAttributeMustHaveElement" xml:space="preserve">
     <value>WriteStartElement must be called at least once before WriteStartAttribute may be called.</value>
@@ -1070,6 +1082,9 @@
   </data>
   <data name="ObjectDeserializer_UnexpectedToken" xml:space="preserve">
     <value>Unexpected character encountered in JSON. Expected '{1}', got '{0}'.</value>
+  </data>
+  <data name="XmlMaxStringContentLengthExceeded" xml:space="preserve">
+    <value>The maximum string content length quota ({0}) has been exceeded while reading XML data. This quota may be increased by changing the MaxStringContentLength property on the XmlDictionaryReaderQuotas object used when creating the XML reader.</value>
   </data>
   <data name="XmlInvalidPrefixState" xml:space="preserve">
     <value>A prefix cannot be defined while WriteState is '{0}'.</value>
