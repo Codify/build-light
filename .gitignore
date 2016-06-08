@@ -3,9 +3,3 @@
 ################################################################################
 
 /Codify.VisualStudioOnline.BuildLight/bin/x86/Debug
-/Codify.VisualStudioOnline.BuildLight/bin/x86/Debug
-*.suo
-/Codify.VisualStudioOnline.BuildLight/bin/x86/Debug
-/Codify.Vsts.BuildLight/obj
-/Codify.Vsts.BuildLight/bin
-*.user
