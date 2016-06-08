@@ -1,0 +1,75 @@
+﻿<UserControl x:Name="ControlRoot"
+    x:Class="Codify.Vsts.BuildLight.UI.Controls.BuildStateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Codify.Vsts.BuildLight.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:Codify.Vsts.BuildLight.UI.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="Boolean2Visibility" />
+
+        <LinearGradientBrush x:Key="BorderBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="Transparent" Offset="0.0" />
+            <GradientStop Color="Silver" Offset="0.5" />
+        </LinearGradientBrush>
+
+        <DataTemplate x:Key="BuildViewTemplate">
+            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="3"  Background="{Binding Converter={StaticResource BuildDetail2BackgroundBrush}}" Margin="2">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=Definition.Name}" FontSize="22" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=CurrentBuild.Name}" FontSize="20" />
+                            <TextBlock Text="{Binding Path=CurrentBuild.SourceVersion}" FontSize="20" Margin="8 0" />
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding Path=CurrentBuild.RequestedFor.DisplayName}" FontSize="16" FontWeight="Bold" Margin="0 8"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+                            <TextBlock Text="Started At" />
+                            <TextBlock Text="{Binding Path=CurrentBuild.FormattedStartTime}" Margin="8 0" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Completed At :" />
+                            <TextBlock Text="{Binding Path=CurrentBuild.FormattedFinishTime}" Margin="8 0" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ProgressRing IsActive="{Binding Path=IsBusy, Mode=TwoWay}" Visibility="{Binding Path=IsBusy, Converter={StaticResource Boolean2Visibility}}" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding ElementName=ControlRoot, Path=ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Build Status" Style="{StaticResource PageTitleStyle}" />
+        <ProgressRing IsActive="{Binding Path=IsBusy, Mode=TwoWay}" Visibility="{Binding Path=IsBusy, Converter={StaticResource Boolean2Visibility}}" />
+
+        <GridView ItemsSource="{Binding Path=Builds}" ItemTemplate="{StaticResource BuildViewTemplate}" Margin="0 10" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid ItemWidth="300" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </GridView>
+    </Grid>
+
+</UserControl>
