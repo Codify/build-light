@@ -1,1 +1,0 @@
-C:\Work\Codify\BuildLight\build-light\Codify.VisualStudioOnline.BuildLight\Codify.VisualStudioOnline.BuildLight.csproj;arm
