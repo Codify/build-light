@@ -29,7 +29,7 @@ build-light runs on a Raspberry Pi as a PowerShell Core container that retrieves
 - We got a status, but we don't know what it is
 
 **_Off_**
-- Check the power? Maybe raise an issue.
+- Container running? Maybe raise an issue.
 
 ## Setup
 TODO
