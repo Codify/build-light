@@ -55,18 +55,21 @@ Configure Azure DevOps parameters for the build-light script via environment var
 1. SSH to your Raspberry Pi
 1. Build Docker image from GitHub project
 
-'docker build github.com/codify/build-light --tag codify/build-light:latest'
+```
+docker build github.com/codify/build-light --tag codify/build-light:latest
+```
 
 1. Run container from the image
-
-'docker run -d \'
-'--name codify_build-light \'
-'--restart unless-stopped \'
-'--device /dev/gpiomem \'
-'-e AzDevOpsOrg=orgname \'
-'-e AzDevOpsProject=projectname \'
-'-e AzDevOpsPAT=secret \'
-'codify/build-light'
+```
+docker run -d \
+ --name codify_build-light \
+ --restart unless-stopped \
+ --device /dev/gpiomem \
+ -e AzDevOpsOrg=orgname \
+ -e AzDevOpsProject=projectname \
+ -e AzDevOpsPAT=secret \
+ codify/build-light
+```
 
 ### RGB LED Lights
 Work in progress
