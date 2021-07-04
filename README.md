@@ -47,16 +47,18 @@ Configure Azure DevOps parameters for the build-light script via environment var
 | ----------- | ----------- |
 | **AzDevOpsOrg** | This is your Azure DevOps organisation/account name. It forms part of the URL you use to access DevOps - https://dev.azure.com/_yourorg_ |
 | **AzDevOpsProject** | Your Azure DevOps project name. |
-| **AzDevOpsPAT** | Personal Access Token used to authenticate the build-light script to your instance. Follow these instructions to [create a PAT](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page#create-a-pat)
-Build (Read) & Release (Read) permissions are required for build-light |
+| **AzDevOpsPAT** | Personal Access Token used to authenticate the build-light script to your instance. Set both Build (Read) & Release (Read) permissions for build-light to work correctly. Follow these instructions to [create a PAT](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=preview-page#create-a-pat). |
 
 **Update the environment variables in the Docker Run command below**
 
 ### Container
 1. SSH to your Raspberry Pi
 1. Build Docker image from GitHub project
+
 'docker build github.com/codify/build-light --tag codify/build-light:latest'
+
 1. Run container from the image
+
 'docker run -d \'
 '--name codify_build-light \'
 '--restart unless-stopped \'
@@ -66,9 +68,5 @@ Build (Read) & Release (Read) permissions are required for build-light |
 '-e AzDevOpsPAT=secret \'
 'codify/build-light'
 
-
-
 ### RGB LED Lights
-TODO
-
-important powershell-iot uses https://github.com/PowerShell/PowerShell-IoT/blob/master/docs/rpi3_pin_layout.md
+Work in progress
